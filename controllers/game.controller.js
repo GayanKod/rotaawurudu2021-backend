@@ -11,10 +11,36 @@ exports.updateUserGameScore = (req, res) => {
             });
         }
 
-        if (user[game]) {
-            user[game] = (user[game] < score ? score : user[game])
-        } else {
-            user[game] = score
+        if (!user[game] || (user[game] && (typeof user[game] === 'number' ? user[game] < score : user[game].score < score))) {
+            switch (game) {
+                case 'LissanaGasa':
+                    user[game] = {
+                        score: score,
+                        time: req.body.time,
+                        clicks: req.body.click
+                    };
+                    break;
+
+                case 'AliyataAsaThebima':
+                    user[game] = {
+                        score: score,
+                        time: req.body.time,
+                        distance: req.body.distance
+                    };
+                    break;
+
+                case 'kanaMuttiya':
+                    user[game] = {
+                        score: score,
+                        time: req.body.time,
+                        maxMutti: req.body.maxMutti
+                    }
+                    break;
+
+                default:
+                    user[game] = score;
+                    break;
+            }
         }
 
         user.save((err, savedUser) => {

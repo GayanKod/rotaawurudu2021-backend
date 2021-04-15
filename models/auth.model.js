@@ -37,22 +37,13 @@ const userScheama = new mongoose.Schema({
     },
 
     // Game fields
-    kanaMuttiya: {
-        type: Number,
-        min: 0
-    },
-    LissanaGasa: {
-        type: Number,
-        min: 0
-    },
+    kanaMuttiya: mongoose.Schema.Types.Mixed,
+    LissanaGasa: mongoose.Schema.Types.Mixed,
     GamaHarahaDiwima: {
         type: Number,
         min: 0
     },
-    AliyataAsaThebima: {
-        type: Number,
-        min: 0
-    },
+    AliyataAsaThebima: mongoose.Schema.Types.Mixed,
     BaloonPipirima: {
         type: Number,
         min: 0
