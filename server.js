@@ -34,10 +34,12 @@ connection.once("open", () => {
 
 const authRouter = require('./routes/auth.route')
 const userRouter = require('./routes/user.route')
+const gameRouter = require('./routes/game.route')
 
 // Use Routes
 app.use('/api', authRouter)
 app.use('/api', userRouter)
+app.use('/api', gameRouter)
 
 
 app.use((req, res) => {

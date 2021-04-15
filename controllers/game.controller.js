@@ -54,22 +54,35 @@ exports.updateUserGameScore = (req, res) => {
             return res.status(200).json({
                 user: savedUser
             });
-
-            // Game.findOne({ game }).populate('highscores').exec((err, gameData) => {
-            //     if (err) {
-            //         return res.status(400).json({
-            //             error: 'Game leaderboard fetching failed'
-            //         });
-            //     }
-
-            //     if (gameData.highscores[gameData.highscores.length - 1][game] < score) {
-
-            //     }
-
-            //     return res.status(200).json({
-            //         user: savedUser
-            //     });
-            // })
         })
+    })
+}
+
+exports.getGameLeaderboard = (req, res) => {
+    const game = req.params.game;
+    let query = '';
+
+    switch (game) {
+        case 'LissanaGasa', 'AliyataAsaThebima', 'kanaMuttiya':
+            query = `${game}.score`;
+            break;
+
+        default:
+            query = game;
+            break;
+    }
+
+    User.find({}).sort([
+        [query, -1]
+    ]).exec((err, docs) => {
+        if (err) {
+            return res.status(400).json({
+                error: err
+            });
+        }
+
+        return res.status(200).json({
+            data: docs
+        });
     })
 }
