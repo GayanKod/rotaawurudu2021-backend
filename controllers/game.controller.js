@@ -72,9 +72,13 @@ exports.getGameLeaderboard = (req, res) => {
             break;
     }
 
-    User.find({}).sort([
+    const selectFields = `email name faculty house ${game}`;
+
+    User.find({
+        [query]: { $exists: true, $ne: null }
+    }).select(selectFields).sort([
         [query, -1]
-    ]).exec((err, docs) => {
+    ]).limit(5).exec((err, docs) => {
         if (err) {
             return res.status(400).json({
                 error: err
